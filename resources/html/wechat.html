@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <script src="/assets/js/jquery.min.js"></script>
+    <title>Payment Mocker Wechat</title>
+</head>
+
+<body>
+    <div class="container">
+        <form method="post" id="form">
+            <div class="mb-3">
+                <label for="sign_type" class="form-label">签名类型</label>
+                <select class="form-select" aria-label="" id="sign_type" name="sign_type">
+                    <option value="MD5" selected>MD5</option>
+                    <option value="HMAC-SHA256">HMAC-SHA256</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="private_key" class="form-label">API 密钥</label>
+                <input type="text" class="form-control" id="private_key" name="private_key" />
+            </div>
+            <div class="mb-3">
+                <label for="callback_url" class="form-label">回调地址</label>
+                <input type="text" class="form-control" id="callback_url" name="callback_url" />
+            </div>
+            <div class="mb-3">
+                <label for="params" class="form-label">回调参数（JSON 格式）</label>
+                <textarea class="form-control" id="params" name="params" rows="10"></textarea>
+            </div>
+            <div type="button" class="btn btn-primary" onclick="submit()">回调</div>
+        </form>
+    </div>
+</body>
+<script>
+    function submit() {
+        $.ajax({
+            type: "POST", 
+            url: "/wechat", 
+            data: $('#form').serialize(),
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
+    }
+</script>
+
+</html>

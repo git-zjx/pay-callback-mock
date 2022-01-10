@@ -7,7 +7,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
 	"net/http"
 	"payment-mocker/pkg/param"
 	"payment-mocker/pkg/xhttp"
@@ -77,9 +76,7 @@ func WechatHandler(c *gin.Context) {
 		c.String(http.StatusOK, err.Error())
 		return
 	}
-	fmt.Println(string(xmlStr))
-	body := strings.NewReader(string(xmlStr))
-	res, err := xhttp.Post(request.CallbackUrl, body, "Content-Type:application/xml")
+	res, err := xhttp.Post(request.CallbackUrl, string(xmlStr), "application/xml")
 	if err != nil {
 		c.String(http.StatusOK, err.Error())
 		return

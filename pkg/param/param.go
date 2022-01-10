@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
+	"net/url"
 	"sort"
 	"strconv"
 	"strings"
@@ -123,4 +124,13 @@ func strval(value interface{}) string {
 		key = string(newValue)
 	}
 	return key
+}
+
+
+func (m Params) FormatURLParam() string {
+	v := url.Values{}
+	for key, value := range m {
+		v.Add(key, strval(value))
+	}
+	return v.Encode()
 }

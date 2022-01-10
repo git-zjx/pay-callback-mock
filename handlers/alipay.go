@@ -8,6 +8,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"hash"
 	"net/http"
 	"payment-mocker/pkg/key"
@@ -70,7 +71,10 @@ func AlipayHandler(c *gin.Context) {
 		return
 	}
 	sign := base64.StdEncoding.EncodeToString(encryptedBytes)
-	res, err := xhttp.Get(request.CallbackUrl + "?" + signData + "&sign=" + sign)
+	request.Params["sign"] = sign
+	data := request.Params.FormatURLParam()
+	fmt.Println(data)
+	res, err := xhttp.Post(request.CallbackUrl, data, "application/x-www-form-urlencoded")
 	if err != nil {
 		c.String(http.StatusOK, err.Error())
 		return

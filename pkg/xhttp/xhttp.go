@@ -2,7 +2,6 @@ package xhttp
 
 import (
 	"bytes"
-	"encoding/json"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -31,10 +30,9 @@ func Get(url string) (string, error) {
 	return result.String(), nil
 }
 
-func Post(url string, data interface{}, contentType string) (string, error) {
+func Post(url string, data string, contentType string) (string, error) {
 	client := &http.Client{Timeout: 5 * time.Second}
-	jsonStr, _ := json.Marshal(data)
-	resp, err := client.Post(url, contentType, bytes.NewBuffer(jsonStr))
+	resp, err := client.Post(url, contentType, bytes.NewBuffer([]byte(data)))
 	if err != nil {
 		return "", err
 	}

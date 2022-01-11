@@ -14,3 +14,5 @@ go run main.go
 cd ./cmd/server
 .\pay-callback-mock.exe
 ```
+
+默认访问地址：localhost:8081
